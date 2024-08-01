@@ -35,7 +35,7 @@ namespace Library.Api.Domain.Authors.Handlers
                 author.LastName = request.LastName;
                 author.BirthDate = request.BirthDate;
 
-                await _libraryDbContext.SaveChangesAsync();
+                await _libraryDbContext.SaveChangesAsync(cancellationToken);
 
                 return Result.Ok();
             }
