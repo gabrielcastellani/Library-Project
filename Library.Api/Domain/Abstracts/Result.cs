@@ -19,6 +19,9 @@
 
         public static Result<TValue> Fail(Exception error)
             => new Result<TValue>(error);
+
+        public static Result<TValue> Fail(string message)
+            => new Result<TValue>(new Exception(message));
     }
 
     public class Result

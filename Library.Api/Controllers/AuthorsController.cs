@@ -1,5 +1,5 @@
 ﻿using Library.Api.Domain.Authors.Commands;
-using Library.Contracts.Http.Requests;
+using Library.Contracts.Http.Requests.Authors;
 using MediatR;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;

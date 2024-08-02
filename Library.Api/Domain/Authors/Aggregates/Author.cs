@@ -9,6 +9,8 @@ namespace Library.Api.Domain.Authors.Aggregates
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
 
+        public Author() { }
+
         public Author(CreateAuthor createAuthor)
         {
             Id = Guid.NewGuid();

@@ -22,6 +22,15 @@ namespace Library.Api.Domain.Books.Handlers
         {
             try
             {
+                var author = _libraryDbContext
+                    .Set<Database.Entities.Authors>()
+                    .FirstOrDefault(item => item.Id == request.AuthorId);
+
+                if (author == null)
+                {
+                    return Result.Fail("Author not found!");
+                }
+
                 var book = _libraryDbContext
                     .Set<Database.Entities.Books>()
                     .FirstOrDefault(item => item.Id == request.Id);
