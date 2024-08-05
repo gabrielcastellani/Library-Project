@@ -1,6 +1,6 @@
-﻿using Library.Api.Domain.Books.Commands;
+﻿using Library.Api.Domain.Books.Aggregates;
+using Library.Api.Domain.Books.Services.Interfaces;
 using Library.Contracts.Http.Requests.Books;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.Api.Controllers
@@ -9,18 +9,17 @@ namespace Library.Api.Controllers
     [Route("/api/v1/books")]
     public class BooksController : ControllerBase
     {
-        private readonly IMediator _mediator;
+        private readonly IBooksService _booksService;
 
-        public BooksController(IMediator mediator)
+        public BooksController(IBooksService booksService)
         {
-            _mediator = mediator;
+            _booksService = booksService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            var result = await _mediator
-                .Send(new GetAllBook());
+            var result = await _booksService.GetAll();
 
             if (result.Success)
             {
@@ -33,12 +32,14 @@ namespace Library.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBookAsync([FromBody] CreateBookRequest request)
         {
-            var result = await _mediator.Send(
-                new CreateBook(
-                    Name: request.Name,
-                    Description: request.Description,
-                    ReleaseDate: request.ReleaseDate,
-                    AuthorId: request.AuthorId));
+            var result = await _booksService
+                .Create(new Book
+                {
+                    Name = request.Name,
+                    Description = request.Description,
+                    ReleaseDate = request.ReleaseDate,
+                    AuthorId = request.AuthorId,
+                });
 
             if (result.Success)
             {
@@ -51,13 +52,15 @@ namespace Library.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateBookAsync(Guid id, [FromBody] UpdateBookRequest request)
         {
-            var result = await _mediator.Send(
-                new UpdateBook(
-                    Id: id,
-                    Name: request.Name,
-                    Description: request.Description,
-                    ReleaseDate: request.ReleaseDate,
-                    AuthorId: request.AuthorId));
+            var result = await _booksService
+                .Update(new Book
+                {
+                    Id = id,
+                    Name = request.Name,
+                    Description = request.Description,
+                    ReleaseDate = request.ReleaseDate,
+                    AuthorId = request.AuthorId,
+                });
 
             if (result.Success)
             {
@@ -70,7 +73,7 @@ namespace Library.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBookAsync(Guid id)
         {
-            var result = await _mediator.Send(new DeleteBook(id));
+            var result = await _booksService.Delete(id);
 
             if (result.Success)
             {

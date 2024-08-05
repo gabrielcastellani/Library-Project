@@ -1,5 +1,7 @@
 using Library.Api.Domain.Authors.Services;
 using Library.Api.Domain.Authors.Services.Interfaces;
+using Library.Api.Domain.Books.Services;
+using Library.Api.Domain.Books.Services.Interfaces;
 using Library.Api.Options;
 using Library.Database.Context;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +16,7 @@ builder.Services.ConfigureOptions<DatabaseOptionsSetup>();
 
 // Services
 builder.Services.AddSingleton<IAuthorsService, AuthorsService>();
+builder.Services.AddSingleton<IBooksService, BooksService>();
 
 builder.Services.AddDbContext<LibraryDbContext>(
     (serviceProvider, dbContextOptionsBuilder) =>
