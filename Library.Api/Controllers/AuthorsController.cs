@@ -1,5 +1,6 @@
 ﻿using Library.Api.Domain.Authors.Aggregates;
 using Library.Api.Domain.Authors.Services.Interfaces;
+using Library.Api.Domain.Books.Services.Interfaces;
 using Library.Contracts.Http.Requests.Authors;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,14 @@ namespace Library.Api.Controllers
     [Route("/api/v1/authors")]
     public class AuthorsController : ControllerBase
     {
+        private readonly IBooksService _booksService;
         private readonly IAuthorsService _authorsService;
 
-        public AuthorsController(IAuthorsService authorsService)
+        public AuthorsController(
+            IBooksService booksService,
+            IAuthorsService authorsService)
         {
+            _booksService = booksService;
             _authorsService = authorsService;
         }
 
@@ -21,6 +26,19 @@ namespace Library.Api.Controllers
         public async Task<IActionResult> GetAllAsync()
         {
             var result = await _authorsService.GetAll();
+
+            if (result.Success)
+            {
+                return Ok(result.Value);
+            }
+
+            return BadRequest(result.Error);
+        }
+
+        [HttpGet("{authorId}/books")]
+        public async Task<IActionResult> GetAllBooksAsync(Guid authorId)
+        {
+            var result = await _booksService.GetAll(authorId);
 
             if (result.Success)
             {
