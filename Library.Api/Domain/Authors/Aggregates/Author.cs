@@ -2,7 +2,7 @@
 
 namespace Library.Api.Domain.Authors.Aggregates
 {
-    internal class Author
+    public class Author
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; }
@@ -11,7 +11,7 @@ namespace Library.Api.Domain.Authors.Aggregates
 
         public Author() { }
 
-        public Author(CreateAuthor createAuthor)
+        internal Author(CreateAuthor createAuthor)
         {
             Id = Guid.NewGuid();
             FirstName = createAuthor.FirstName;
@@ -19,7 +19,7 @@ namespace Library.Api.Domain.Authors.Aggregates
             BirthDate = createAuthor.BirthDate;
         }
 
-        public Author(Database.Entities.Authors author)
+        internal Author(Database.Entities.Authors author)
         {
             Id = author.Id;
             FirstName = author.FirstName;
@@ -27,7 +27,7 @@ namespace Library.Api.Domain.Authors.Aggregates
             BirthDate = author.BirthDate;
         }
 
-        public Database.Entities.Authors ToEntity()
+        internal Database.Entities.Authors ToEntity()
         {
             return new Database.Entities.Authors
             {

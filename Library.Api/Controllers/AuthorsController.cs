@@ -1,6 +1,6 @@
-﻿using Library.Api.Domain.Authors.Commands;
+﻿using Library.Api.Domain.Authors.Aggregates;
+using Library.Api.Domain.Authors.Services.Interfaces;
 using Library.Contracts.Http.Requests.Authors;
-using MediatR;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,17 +10,17 @@ namespace Library.Api.Controllers
     [Route("/api/v1/authors")]
     public class AuthorsController : ControllerBase
     {
-        private readonly IMediator _mediator;
+        private readonly IAuthorsService _authorsService;
 
-        public AuthorsController(IMediator mediator)
+        public AuthorsController(IAuthorsService authorsService)
         {
-            _mediator = mediator;
+            _authorsService = authorsService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            var result = await _mediator.Send(new GetAllAuthor());
+            var result = await _authorsService.GetAll();
 
             if (result.Success)
             {
@@ -33,11 +33,13 @@ namespace Library.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAuthorAsync([FromBody] CreateAuthorRequest request)
         {
-            var result = await _mediator.Send(
-                new CreateAuthor(
-                    FirstName: request.FirstName,
-                    LastName: request.LastName,
-                    BirthDate: request.BirthDate));
+            var result = await _authorsService
+                .Create(new Author
+                {
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                    BirthDate = request.BirthDate,
+                });
 
             if (result.Success)
             {
@@ -50,12 +52,14 @@ namespace Library.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAuthorAsync(Guid id, [FromBody] UpdateAuthorRequest request)
         {
-            var result = await _mediator.Send(
-                new UpdateAuthor(
-                    Id: id,
-                    FirstName: request.FirstName,
-                    LastName: request.LastName,
-                    BirthDate: request.BirthDate));
+            var result = await _authorsService
+                .Update(new Author
+                {
+                    Id = id,
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                    BirthDate = request.BirthDate
+                });
 
             if (result.Success)
             {
@@ -68,7 +72,7 @@ namespace Library.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAuthorAsync(Guid id)
         {
-            var result = await _mediator.Send(new DeleteAuthor(id));
+            var result = await _authorsService.Delete(id);
 
             if (result.Success)
             {
