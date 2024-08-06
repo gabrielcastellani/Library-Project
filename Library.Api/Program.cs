@@ -32,7 +32,7 @@ builder.Services.AddDbContext<LibraryDbContext>(
 
     dbContextOptionsBuilder.EnableDetailedErrors(databaseOptions.EnableDetailedErrors);
     dbContextOptionsBuilder.EnableSensitiveDataLogging(databaseOptions.EnableSensitiveDataLogging);
-});
+}, ServiceLifetime.Singleton);
 
 builder.Services.AddMediatR(configuration =>
 {
