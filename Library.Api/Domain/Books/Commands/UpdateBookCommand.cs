@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Library.Api.Domain.Books.Commands
 {
-    internal record UpdateBook(
+    internal record UpdateBookCommand(
         Guid Id,
         string Name,
         string Description,

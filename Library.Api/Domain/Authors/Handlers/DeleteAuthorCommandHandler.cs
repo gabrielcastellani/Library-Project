@@ -5,43 +5,40 @@ using MediatR;
 
 namespace Library.Api.Domain.Authors.Handlers
 {
-    internal class UpdateAuthorHandler : IRequestHandler<UpdateAuthor, Result>
+    internal class DeleteAuthorCommandHandler : IRequestHandler<DeleteAuthorCommand, Result>
     {
         private readonly LibraryDbContext _libraryDbContext;
-        private readonly ILogger<UpdateAuthorHandler> _logger;
+        private readonly ILogger<DeleteAuthorCommandHandler> _logger;
 
-        public UpdateAuthorHandler(
+        public DeleteAuthorCommandHandler(
             ILoggerFactory loggerFactory,
             LibraryDbContext libraryDbContext)
         {
             _libraryDbContext = libraryDbContext;
-            _logger = loggerFactory.CreateLogger<UpdateAuthorHandler>();
+            _logger = loggerFactory.CreateLogger<DeleteAuthorCommandHandler>();
         }
 
-        public async Task<Result> Handle(UpdateAuthor request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(DeleteAuthorCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 var author = _libraryDbContext
                     .Set<Database.Entities.Authors>()
-                    .FirstOrDefault(entity => entity.Id == request.Id);
+                    .FirstOrDefault(item => item.Id == request.Id);
 
                 if (author == null)
                 {
                     return Result.Fail("Author not found!");
                 }
 
-                author.FirstName = request.FirstName;
-                author.LastName = request.LastName;
-                author.BirthDate = request.BirthDate;
-
-                await _libraryDbContext.SaveChangesAsync(cancellationToken);
+                _libraryDbContext.Remove(author);
+                await _libraryDbContext.SaveChangesAsync();
 
                 return Result.Ok();
             }
             catch (Exception error)
             {
-                _logger.LogError(error, "Failure on update an author");
+                _logger.LogError(error, "Failure on delete an author");
                 return Result.Fail(error);
             }
         }

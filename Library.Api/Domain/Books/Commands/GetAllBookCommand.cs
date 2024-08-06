@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Library.Api.Domain.Books.Commands
 {
-    internal record GetAllBook : IRequest<Result<Book[]>>
+    internal record GetAllBookCommand : IRequest<Result<Book[]>>
     {
         public Guid? AuthorId { get; set; }
     }

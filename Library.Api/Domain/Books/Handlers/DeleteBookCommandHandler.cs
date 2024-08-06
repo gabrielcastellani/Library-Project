@@ -5,20 +5,20 @@ using MediatR;
 
 namespace Library.Api.Domain.Books.Handlers
 {
-    internal class DeleteBookHandler : IRequestHandler<DeleteBook, Result>
+    internal class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand, Result>
     {
         private readonly LibraryDbContext _libraryDbContext;
-        private readonly ILogger<DeleteBookHandler> _logger;
+        private readonly ILogger<DeleteBookCommandHandler> _logger;
 
-        public DeleteBookHandler(
+        public DeleteBookCommandHandler(
             ILoggerFactory loggerFactory,
             LibraryDbContext libraryDbContext)
         {
             _libraryDbContext = libraryDbContext;
-            _logger = loggerFactory.CreateLogger<DeleteBookHandler>();
+            _logger = loggerFactory.CreateLogger<DeleteBookCommandHandler>();
         }
 
-        public async Task<Result> Handle(DeleteBook request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(DeleteBookCommand request, CancellationToken cancellationToken)
         {
             try
             {

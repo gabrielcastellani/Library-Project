@@ -17,7 +17,7 @@ namespace Library.Api.Domain.Books.Services
 
         public Task<Result<Book[]>> GetAll(Guid? authorId = null)
         {
-            return _mediator.Send(new GetAllBook
+            return _mediator.Send(new GetAllBookCommand
             {
                 AuthorId = authorId,
             });
@@ -26,7 +26,7 @@ namespace Library.Api.Domain.Books.Services
         public Task<Result<Book>> Create(Book book)
         {
             return _mediator.Send(
-                new CreateBook(
+                new CreateBookCommand(
                     Name: book.Name,
                     Description: book.Description,
                     ReleaseDate: book.ReleaseDate,
@@ -36,7 +36,7 @@ namespace Library.Api.Domain.Books.Services
         public Task<Result> Update(Book book)
         {
             return _mediator.Send(
-                new UpdateBook(
+                new UpdateBookCommand(
                     Id: book.Id,
                     Name: book.Name,
                     Description: book.Description,
@@ -46,7 +46,7 @@ namespace Library.Api.Domain.Books.Services
 
         public Task<Result> Delete(Guid bookId)
         {
-            return _mediator.Send(new DeleteBook(bookId));
+            return _mediator.Send(new DeleteBookCommand(bookId));
         }
     }
 }

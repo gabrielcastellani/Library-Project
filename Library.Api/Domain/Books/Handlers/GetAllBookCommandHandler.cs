@@ -7,20 +7,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Library.Api.Domain.Books.Handlers
 {
-    internal sealed class GetAllBookHandler : IRequestHandler<GetAllBook, Result<Book[]>>
+    internal sealed class GetAllBookCommandHandler : IRequestHandler<GetAllBookCommand, Result<Book[]>>
     {
         private readonly LibraryDbContext _libraryDbContext;
-        private readonly ILogger<GetAllBookHandler> _logger;
+        private readonly ILogger<GetAllBookCommandHandler> _logger;
 
-        public GetAllBookHandler(
+        public GetAllBookCommandHandler(
             ILoggerFactory loggerFactory,
             LibraryDbContext libraryDbContext)
         {
             _libraryDbContext = libraryDbContext;
-            _logger = loggerFactory.CreateLogger<GetAllBookHandler>();
+            _logger = loggerFactory.CreateLogger<GetAllBookCommandHandler>();
         }
 
-        public async Task<Result<Book[]>> Handle(GetAllBook request, CancellationToken cancellationToken)
+        public async Task<Result<Book[]>> Handle(GetAllBookCommand request, CancellationToken cancellationToken)
         {
             try
             {

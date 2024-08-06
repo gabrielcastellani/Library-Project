@@ -4,6 +4,5 @@ using MediatR;
 
 namespace Library.Api.Domain.Authors.Commands
 {
-    internal record CreateAuthor(string FirstName, string LastName, DateTime BirthDate)
-        : IRequest<Result<Author>>;
+    internal record GetAllAuthorCommand() : IRequest<Result<Author[]>>;
 }

@@ -6,20 +6,20 @@ using MediatR;
 
 namespace Library.Api.Domain.Books.Handlers
 {
-    internal class CreateBookHandler : IRequestHandler<CreateBook, Result<Book>>
+    internal class CreateBookCommandHandler : IRequestHandler<CreateBookCommand, Result<Book>>
     {
         private readonly LibraryDbContext _libraryDbContext;
-        private readonly ILogger<CreateBookHandler> _logger;
+        private readonly ILogger<CreateBookCommandHandler> _logger;
 
-        public CreateBookHandler(
+        public CreateBookCommandHandler(
             ILoggerFactory loggerFactory,
             LibraryDbContext libraryDbContext)
         {
             _libraryDbContext = libraryDbContext;
-            _logger = loggerFactory.CreateLogger<CreateBookHandler>();
+            _logger = loggerFactory.CreateLogger<CreateBookCommandHandler>();
         }
 
-        public async Task<Result<Book>> Handle(CreateBook request, CancellationToken cancellationToken)
+        public async Task<Result<Book>> Handle(CreateBookCommand request, CancellationToken cancellationToken)
         {
             try
             {

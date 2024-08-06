@@ -3,5 +3,5 @@ using MediatR;
 
 namespace Library.Api.Domain.Authors.Commands
 {
-    internal record DeleteAuthor(Guid Id) : IRequest<Result>;
+    internal record DeleteAuthorCommand(Guid Id) : IRequest<Result>;
 }

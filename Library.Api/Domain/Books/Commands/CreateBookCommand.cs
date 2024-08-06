@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Library.Api.Domain.Books.Commands
 {
-    internal record CreateBook(
+    internal record CreateBookCommand(
         string Name,
         string Description,
         DateTime ReleaseDate,

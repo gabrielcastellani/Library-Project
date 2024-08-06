@@ -12,7 +12,7 @@ namespace Library.Api.Domain.Books.Aggregates
 
         public Book() { }
 
-        internal Book(CreateBook createBook)
+        internal Book(CreateBookCommand createBook)
         {
             Id = Guid.NewGuid();
             Name = createBook.Name;

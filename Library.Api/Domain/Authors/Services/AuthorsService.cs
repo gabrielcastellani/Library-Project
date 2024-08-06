@@ -17,13 +17,13 @@ namespace Library.Api.Domain.Authors.Services
 
         public Task<Result<Author[]>> GetAll()
         {
-            return _mediator.Send(new GetAllAuthor());
+            return _mediator.Send(new GetAllAuthorCommand());
         }
 
         public Task<Result<Author>> Create(Author author)
         {
             return _mediator.Send(
-                new CreateAuthor(
+                new CreateAuthorCommand(
                     FirstName: author.FirstName,
                     LastName: author.LastName,
                     BirthDate: author.BirthDate));
@@ -32,7 +32,7 @@ namespace Library.Api.Domain.Authors.Services
         public Task<Result> Update(Author author)
         {
             return _mediator.Send(
-                new UpdateAuthor(
+                new UpdateAuthorCommand(
                     Id: author.Id,
                     FirstName: author.FirstName,
                     LastName: author.LastName,
@@ -41,7 +41,7 @@ namespace Library.Api.Domain.Authors.Services
 
         public Task<Result> Delete(Guid authorId)
         {
-            return _mediator.Send(new DeleteAuthor(authorId));
+            return _mediator.Send(new DeleteAuthorCommand(authorId));
         }
     }
 }

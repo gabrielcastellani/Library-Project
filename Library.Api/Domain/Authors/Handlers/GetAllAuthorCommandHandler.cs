@@ -7,20 +7,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Library.Api.Domain.Authors.Handlers
 {
-    internal class GetAllAuthorHandler : IRequestHandler<GetAllAuthor, Result<Author[]>>
+    internal class GetAllAuthorCommandHandler : IRequestHandler<GetAllAuthorCommand, Result<Author[]>>
     {
         private readonly LibraryDbContext _libraryDbContext;
-        private readonly ILogger<GetAllAuthorHandler> _logger;
+        private readonly ILogger<GetAllAuthorCommandHandler> _logger;
 
-        public GetAllAuthorHandler(
+        public GetAllAuthorCommandHandler(
             ILoggerFactory loggerFactory,
             LibraryDbContext libraryDbContext)
         {
             _libraryDbContext = libraryDbContext;
-            _logger = loggerFactory.CreateLogger<GetAllAuthorHandler>();
+            _logger = loggerFactory.CreateLogger<GetAllAuthorCommandHandler>();
         }
 
-        public async Task<Result<Author[]>> Handle(GetAllAuthor request, CancellationToken cancellationToken)
+        public async Task<Result<Author[]>> Handle(GetAllAuthorCommand request, CancellationToken cancellationToken)
         {
             try
             {

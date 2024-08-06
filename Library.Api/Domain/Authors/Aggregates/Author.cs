@@ -11,7 +11,7 @@ namespace Library.Api.Domain.Authors.Aggregates
 
         public Author() { }
 
-        internal Author(CreateAuthor createAuthor)
+        internal Author(CreateAuthorCommand createAuthor)
         {
             Id = Guid.NewGuid();
             FirstName = createAuthor.FirstName;
